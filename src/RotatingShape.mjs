@@ -5,17 +5,16 @@ export class RotatingShape {
 
     constructor(content) {
         this.contentAsString = content.split(" ").join("") + "\n"
-        let helperArr = content.split("\n", 3);
+        let helperArr = content.split("\n");
         this.contentAsString = ""
         for (let i = 0; i < helperArr.length; i++) {
             this.contentAsString += helperArr[i].trim()
         }
-        console.log(this.contentAsString, ".length =" , this.contentAsString.length )
+        this.width = Math.sqrt(this.contentAsString.length)
         this.originalMatrix = this.initializeMatrix(this.contentAsString)
     }
 
     initializeMatrix() {
-        this.width = Math.sqrt(this.contentAsString.length)
         let contentIndex = 0;
         let matrix = [];
         let row = [];
@@ -39,7 +38,6 @@ export class RotatingShape {
            }
            s += "\n"
        }
-       console.log('\nReturn:\n',)
        return new RotatingShape(s).toString()
     
 
@@ -54,7 +52,6 @@ export class RotatingShape {
             }
             s += "\n"
         }
-        console.log('\nReturn:\n',)
         return new RotatingShape(s).toString()
      
         
