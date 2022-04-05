@@ -1,76 +1,86 @@
-
 export class RotatingShape {
     width;
     contentAsString;
-    contentMatrix;
+    originalMatrix = null;
 
     constructor(content) {
-        this.width = 3
         this.contentAsString = content.split(" ").join("") + "\n"
         let helperArr = content.split("\n", 3);
+        this.contentAsString = ""
         for (let i = 0; i < helperArr.length; i++) {
-            helperArr[i] = helperArr[i].trim()
+            this.contentAsString += helperArr[i].trim()
         }
-        
-        this.contentMatrix = 
-            [
-                [[],[],[]],
-                [[],[],[]],
-                [[],[],[]]
-            ]
-   
-        for (let row = 0; row < helperArr.length; row++) {
-            for (let i = 0; i < helperArr.length; i++ ) {
-                this.contentMatrix[row][i] = helperArr[row].charAt(i)
-            }
-        }
-
-        for (let i = 0; i < 4; i++) {
-            this.rotateRight()
-            console.log(this.toString())
-        }
+        console.log(this.contentAsString, ".length =" , this.contentAsString.length )
+        this.originalMatrix = this.initializeMatrix(this.contentAsString)
     }
-    /**
-     * Credit: https://reginafurness.medium.com/rotate-a-square-matrix-by-90-degrees-in-javascript-700f0315e5c
-     * 
-     */
+
+    initializeMatrix() {
+        this.width = Math.sqrt(this.contentAsString.length)
+        let contentIndex = 0;
+        let matrix = [];
+        let row = [];
+        for (let i = 0; i < this.width; i++) {
+            for (let j= 0; j < this.width; j++) {
+                row.push(this.contentAsString[contentIndex]);
+                contentIndex++;
+            }
+            matrix[i] = row;
+            row = [];
+        }
+        return matrix;
+
+    }
     rotateRight() {
-        let left = 0, right = this.contentMatrix.length - 1;
-        while (left < right) {
-            for (let i = 0; i < right - left; i++) {
-                let top = left, bottom = right;
+       let newMatrix = this.originalMatrix[0].map((val, index) => this.originalMatrix.map(row => row[index]).reverse())
+       let s = ""
+       for (let row = 0; row < newMatrix.length; row++) {
+           for (let i = 0; i < newMatrix.length; i++ ) {
+             s += newMatrix[row][i]
+           }
+           s += "\n"
+       }
+       console.log('\nReturn:\n',)
+       return new RotatingShape(s).toString()
     
-                // save top left
-                let topLeft = this.contentMatrix[top][left + i];
-                
-                // swap top left and bottom left
-                this.contentMatrix[top][left + i] = this.contentMatrix[bottom - i][left];
-    
-                // swap bottom left and bottom right
-                this.contentMatrix[bottom - i][left] = this.contentMatrix[bottom][right - i];
-                
-                // swap bottom right and top right
-                this.contentMatrix[bottom][right - i] = this.contentMatrix[top + i][right];
-    
-                // swap top right and top left
-                this.contentMatrix[top + i][right] = topLeft;
-    
-            }
-            left++;
-            right--;
-        }
-    }
 
-    
-    toString() {
+    }
+   
+    rotateLeft() {
+        let newMatrix = this.originalMatrix[0].map((val, index) => this.originalMatrix.map(row => row[row.length-1-index]));
         let s = ""
-        for (let row = 0; row < this.contentMatrix.length; row++) {
-            for (let i = 0; i < this.contentMatrix.length; i++ ) {
-              s += this.contentMatrix[row][i]
+        for (let row = 0; row < newMatrix.length; row++) {
+            for (let i = 0; i < newMatrix.length; i++ ) {
+              s += newMatrix[row][i]
             }
             s += "\n"
         }
-       return s;
+        console.log('\nReturn:\n',)
+        return new RotatingShape(s).toString()
+     
+        
     }
+    
+    toString() {
+        let s = ""
+        for (let row = 0; row < this.originalMatrix.length; row++) {
+            for (let i = 0; i < this.originalMatrix.length; i++ ) {
+              s += this.originalMatrix[row][i]
+            }
+            s += "\n"
+        }
+        return s
+       }
+
+    stringFromMatrix( matrix ) {
+        let s = ""
+        for (let row = 0; row < matrix.length; row++) {
+            for (let i = 0; i < matrix.length; i++ ) {
+              s += matrix[row][i]
+            }
+            s += "\n"
+        }
+        return s
+    }
+
 }
   

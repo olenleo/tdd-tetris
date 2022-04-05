@@ -35,7 +35,6 @@ export class Board {
   }
 
   tick() {
-    console.log('TICK:')
     for (let row in this.board) {
       var currentRow = this.board[row];
       var index = this.board[row].indexOf('X');
