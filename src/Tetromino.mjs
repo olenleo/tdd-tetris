@@ -1,5 +1,9 @@
 import {RotatingShape} from "./RotatingShape.mjs";
-
+/**
+ * For full disclosure, I have based this upon https://github.com/luontola/tdd-mooc-tetris/blob/d36b12f62d0d5839e47fd2e403e300f16f592eae/src/Tetrominoe.mjs
+ * Toimin TIRA:ssa oppimallani tavalla, eli tutustuin koodiin ja toteutin sen uudestaan seuraavana päivänä ilman muistiinpanoja.
+ * Toivottavasti tämä menettely kelpaa myös tällä kurssilla!
+ */
 
 export class Tetromino {
   
@@ -42,7 +46,3 @@ export class Tetromino {
 
 }
 
-
-/*
-
-*/
