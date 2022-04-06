@@ -1,19 +1,19 @@
 export class RotatingShape {
     width;
     contentAsString;
-    originalMatrix = null;
-
+    originalMatrix;
+    
     constructor(content) {
         this.contentAsString = content.split(" ").join("") + "\n"
         let helperArr = content.split("\n");
-        this.contentAsString = ""
+        this.contentAsString = "";
         for (let i = 0; i < helperArr.length; i++) {
-            this.contentAsString += helperArr[i].trim()
+            this.contentAsString += helperArr[i].trim();
         }
-        this.width = Math.sqrt(this.contentAsString.length)
-        this.originalMatrix = this.initializeMatrix(this.contentAsString)
+        this.width = Math.sqrt(this.contentAsString.length);
+        this.originalMatrix = this.initializeMatrix(this.contentAsString);
     }
-
+ 
     initializeMatrix() {
         let contentIndex = 0;
         let matrix = [];
@@ -27,20 +27,18 @@ export class RotatingShape {
             row = [];
         }
         return matrix;
-
     }
-    rotateRight() {
-       let newMatrix = this.originalMatrix[0].map((val, index) => this.originalMatrix.map(row => row[index]).reverse())
-       let s = ""
-       for (let row = 0; row < newMatrix.length; row++) {
-           for (let i = 0; i < newMatrix.length; i++ ) {
-             s += newMatrix[row][i]
-           }
-           s += "\n"
-       }
-       return new RotatingShape(s).toString()
     
-
+    rotateRight() {
+        let newMatrix = this.originalMatrix[0].map((val, index) => this.originalMatrix.map(row => row[index]).reverse())
+        let s = ""
+        for (let row = 0; row < newMatrix.length; row++) {
+            for (let i = 0; i < newMatrix.length; i++ ) {
+                s += newMatrix[row][i];
+            }
+              s += "\n";
+        }
+        return new RotatingShape(s)
     }
    
     rotateLeft() {
@@ -52,9 +50,7 @@ export class RotatingShape {
             }
             s += "\n"
         }
-        return new RotatingShape(s).toString()
-     
-        
+        return new RotatingShape(s)
     }
     
     toString() {
@@ -67,17 +63,5 @@ export class RotatingShape {
         }
         return s
        }
-
-    stringFromMatrix( matrix ) {
-        let s = ""
-        for (let row = 0; row < matrix.length; row++) {
-            for (let i = 0; i < matrix.length; i++ ) {
-              s += matrix[row][i]
-            }
-            s += "\n"
-        }
-        return s
-    }
-
 }
   
