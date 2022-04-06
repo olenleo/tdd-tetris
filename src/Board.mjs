@@ -24,7 +24,8 @@ export class Board {
     return string;
   }
 
-  drop() {
+  drop( block ) {
+    if (block.constructor.name === "Block") {
     if (!this.blockIsFalling ){
       this.blockIsFalling = true;
       let mid = Math.floor(this.width / 2);
@@ -32,7 +33,17 @@ export class Board {
     } else {
      throw 'already falling';
     }
+  } else {
+    if (!this.blockIsFalling ){
+      this.blockIsFalling = true;
+      let mid = Math.floor(this.width / 2);
+      this.board[0][mid] = 'U';
+    } else {
+     throw 'already falling';
+    }
+
   }
+}
 
   tick() {
     for (let row in this.board) {
