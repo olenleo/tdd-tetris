@@ -1,22 +1,22 @@
 import './Block.mjs'
 export class Board {
-  width;
+  boardboardWidth;
   height;
   board;
   blockIsFalling;
 
-  constructor(width, height) {
+  constructor(boardWidth, height) {
     
-    this.width = width;
+    this.boardWidth = boardWidth;
     this.height = height;
-    this.board = this.initializeBoardArray(this.width, this.height);
+    this.board = this.initializeBoardArray(this.boardWidth, this.height);
     this.blockIsFalling = false
   }
 
   toString() {
     let string = '';
     for (let i = 0; i < this.height; i++) {
-      for (let j =0; j < this.width; j++) {
+      for (let j =0; j < this.boardWidth; j++) {
         string += this.board[i][j];
       }
       string += '\n';
@@ -28,16 +28,26 @@ export class Board {
     if (block.constructor.name === "Block") {
     if (!this.blockIsFalling ){
       this.blockIsFalling = true;
-      let mid = Math.floor(this.width / 2);
+      let mid = Math.floor(this.boardWidth / 2);
       this.board[0][mid] = 'X';
     } else {
      throw 'already falling';
     }
   } else {
     if (!this.blockIsFalling ){
+      
       this.blockIsFalling = true;
-      let mid = Math.floor(this.width / 2);
-      this.board[0][mid] = 'U';
+      let boardCenter = Math.floor(this.boardWidth / 2);
+      let fallingBlockWidth = block.orientations[0].width
+      let fallingBlockStartIndex = boardCenter - Math.floor(fallingBlockWidth / 2) -1 
+      console.log('Start point of block', fallingBlockStartIndex)
+      for (let row= 0; row < block.rows().length; row++) {
+        for (let col = 0; col < fallingBlockWidth; col++) {
+          console.log('Bug at', row, fallingBlockStartIndex + col)
+          this.board[row][fallingBlockStartIndex + col] = block.cellAtIndex(row,col)
+        }
+      }
+      
     } else {
      throw 'already falling';
     }
@@ -68,11 +78,11 @@ export class Board {
     console.log("\n")
   }
 
-  initializeBoardArray(width, height) {
+  initializeBoardArray(boardWidth, height) {
     let boardArray = [];
     let row = [];
     for (let i = 0; i < height; i++) {
-      for (let j = 0; j < width; j++) {
+      for (let j = 0; j < boardWidth; j++) {
         row.push('.');
       }
       boardArray[i] = row;

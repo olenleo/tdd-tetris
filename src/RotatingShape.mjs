@@ -15,7 +15,7 @@ export class RotatingShape {
     }
  
     initializeMatrix() {
-        let contentIndex = 0;
+        let contentIndex = 0;   
         let matrix = [];
         let row = [];
         for (let i = 0; i < this.width; i++) {
@@ -63,5 +63,8 @@ export class RotatingShape {
         }
         return s
        }
+    getMatrix() {
+        return this.originalMatrix
+    }
 }
   

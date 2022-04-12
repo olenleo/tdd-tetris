@@ -7,13 +7,25 @@ import {RotatingShape} from "./RotatingShape.mjs";
 
 export class Tetromino {
   
-  static T_SHAPE = new Tetromino(`.T.TTT...`, 0 ,4)
-  static I_SHAPE = new Tetromino(`..........IIII...........`, 0, 2);
-  static O_SHAPE = new Tetromino(`.OO.OO...`,0,1)
+  static T_SHAPE = new Tetromino(
+    `.T.
+     TTT
+     ...`, 0 ,4)
+  static I_SHAPE = new Tetromino(
+    `.....
+     .....
+     IIII.
+     .....
+     .....`, 0, 2);
+  static O_SHAPE = new Tetromino(
+    `.OO
+     .OO
+     ...`,0,1)
 
  
   orientation
   orientations
+  
 
   constructor(shape, orientation, orientations) {
     if (shape === null) {
@@ -44,5 +56,14 @@ export class Tetromino {
     return new Tetromino(null,setOrientation, this.orientations)
   }
 
+  rows() {
+    return this.orientations[this.orientation].originalMatrix
+  }
+
+  cellAtIndex(row, column) {
+    console.log('Cell at [', row, ',', column, '] :',this.orientations[this.orientation].originalMatrix[row][column])
+    return this.orientations[this.orientation].originalMatrix[row][column]
+  }
+  
 }
 
