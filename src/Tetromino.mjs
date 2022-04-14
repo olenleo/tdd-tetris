@@ -21,8 +21,28 @@ export class Tetromino {
     `.OO
      .OO
      ...`,0,1)
+  
+  static Z_SHAPE = new Tetromino(
+    `ZZ.
+     .ZZ
+     ...`, 0, 2)
 
- 
+  static S_SHAPE = new Tetromino(
+    `.SS
+     SS.
+     ...`, 0, 2)
+
+  static L_SHAPE = new Tetromino(
+    `.....
+     LLLL.
+     ...L.
+     .....`, 0, 4)
+    
+    static J_SHAPE = new Tetromino(
+    `.....
+     ...L.
+     LLLL.
+     .....`, 0, 4)
   orientation
   orientations
   
@@ -61,9 +81,14 @@ export class Tetromino {
   }
 
   cellAtIndex(row, column) {
-    console.log('Cell at [', row, ',', column, '] :',this.orientations[this.orientation].originalMatrix[row][column])
+    //console.log('Cell at [', row, ',', column, '] :', this.orientations[this.orientation].originalMatrix[row][column])
     return this.orientations[this.orientation].originalMatrix[row][column]
   }
+
+  botRow() {
+      return this.orientations[this.orientation].originalMatrix[this.rows().length -1]
+  }
+  
   
 }
 
