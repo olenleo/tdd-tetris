@@ -52,6 +52,10 @@ export class RotatingShape {
         }
         return new RotatingShape(s)
     }
+
+    blockAt(row, col) {
+        return this.originalMatrix[row][col]
+    }
     
     toString() {
         let s = ""

@@ -80,8 +80,23 @@ export class Tetromino {
     return this.orientations[this.orientation].originalMatrix
   }
 
+  shape() {
+    return this.orientations[this.orientation]
+  }
+  /**
+   * Method references 'RotatingShape' matrix
+   * @param {*} row 
+   * @param {*} col 
+   * @returns RotatingShape -> OriginalMatrix[row][col]
+   */
+  blockAt(row, col) {
+    console.log('Tetromino blockat')
+    return this.shape().blockAt(row, col);
+  }
+
   cellAtIndex(row, column) {
-    //console.log('Cell at [', row, ',', column, '] :', this.orientations[this.orientation].originalMatrix[row][column])
+    console.log('Tetromino here :)):):):)')
+    console.log('Cell at [', row, ',', column, '] :', this.orientations[this.orientation].originalMatrix[row][column])
     return this.orientations[this.orientation].originalMatrix[row][column]
   }
 
@@ -89,6 +104,9 @@ export class Tetromino {
       return this.orientations[this.orientation].originalMatrix[this.rows().length -1]
   }
   
+  width() {
+
+  }
   
 }
 

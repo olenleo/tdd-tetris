@@ -1,165 +1,76 @@
-import './Block.mjs'
-export class Board {
-  boardWidth;
-  height;
-  board;
-  blockIsFalling;
-  fallingBlock;
-  fallingBlockCenter;
-  fallingBlockStartIndex;
-  fallingBlockHeight;
-  type;
-  
+const EMPTY = ".";
 
-  constructor(boardWidth, height) {
+export class Board {
+  #width;
+  #height;
+  #fallingBlock = null;
+  #fallingRow;
+  #fallingCol;
+  #immobile;
+
+  constructor(width, height) {
+    this.#width = width;
+    this.#height = height;
+    this.#immobile = new Array(height);
+    for (let row = 0; row < height; row++) {
+      this.#immobile[row] = new Array(width).fill(EMPTY);
+    }
+  }
+
+  drop(block) {
+    if (this.#fallingBlock) {
+      throw new Error("another block is already falling");
+    }
+    this.#fallingBlock = block;
+    this.#fallingRow = 0;
+    this.#fallingCol = Math.floor((this.#width - block.width()) / 2);
+  }
+
+  tick() {
+    if (this.collidesWithBot() || this.collidesWithImmobile()) {
+      this.#stopFalling();
+    } else {
+      this.#fallingRow++;
+    }
+  }
+  collidesWithBot() {
     
-    this.boardWidth = boardWidth;
-    this.height = height;
-    this.board = this.initializeBoardArray(this.boardWidth, this.height);
-    this.blockIsFalling = false
-    this.fallingBlockWidth = 0
+    return this.#fallingRow + 1 >= this.#height;
+  }
+
+  collidesWithImmobile() {
+      // if Immobile[row+1][col] isEmpty etc
+      console.log('BONK')
+      let nextRow = this.#fallingRow + 1;
+      let nextCol = this.#fallingCol;
+      return this.#immobile[nextRow][nextCol] !== EMPTY;
+    }
+
+  #stopFalling() {
+    this.#immobile[this.#fallingRow][this.#fallingCol] = this.#fallingBlock.blockAt(0,0);
+    this.#fallingBlock = null;
+  }
+
+  hasFalling() {
+    return this.#fallingBlock !== null;
   }
 
   toString() {
-    let string = '';
-    for (let i = 0; i < this.height; i++) {
-      for (let j =0; j < this.boardWidth; j++) {
-        string += this.board[i][j];
-      }
-      string += '\n';
-    }
-    return string;
-  }
-
-  drop( block ) {
-    if (block.constructor.name === "Block") {
-      this.type = "Block"
-    if (!this.blockIsFalling ){
-      this.blockIsFalling = true;
-      let mid = Math.floor(this.boardWidth / 2);
-      this.board[0][mid] = 'X';
-    } else {
-     throw 'already falling';
-    }
-  } else {
-    if (!this.blockIsFalling ){
-      this.blockIsFalling = true;
-      this.fallingBlock = block;
-      let boardCenter = Math.floor(this.boardWidth / 2);
-      console.log('WIDTH:', block.orientations[0].width)
-      this.fallingBlockWidth = block.orientations[0].width;
-      this.fallingBlockHeight = block.rows().length
-      this.fallingBlockCenter = {x : boardCenter, y : Math.floor(this.fallingBlockWidth / 2)}
-      console.log('center: ', this.fallingBlockCenter)
-
-      this.fallingBlockStartIndex = boardCenter - Math.floor(this.fallingBlockWidth / 2) - 1;
-      console.log('Start point of block', this.fallingBlockStartIndex);
-      
-      /** 
-      for (let row= 0; row < block.rows().length; row++) {
-        for (let col = 0; col < this.fallingBlockWidth; col++) {
-          this.board[row][fallingBlockStartIndex + col] = block.cellAtIndex(row,col)
+    let s = "";
+    for (let row = 0; row < this.#height; row++) {
+      for (let col = 0; col < this.#width; col++) {
+        if (
+          this.#fallingBlock &&
+          row === this.#fallingRow &&
+          col === this.#fallingCol
+        ) {
+          s += this.#fallingBlock.blockAt(0, 0);
+        } else {
+          s += this.#immobile[row][col];
         }
       }
-      */
-     this.drawTetrominoFrom(this.fallingBlockCenter.y, this.fallingBlockCenter.x)
-    } else {
-     throw 'already falling';
+      s += "\n";
     }
-
-  }
-}
-/**
- * tick() {
-    for (let row in this.board) {
-      var currentRow = this.board[row];
-
-      if (~index) {
-        let next = parseInt(row + 1);
-        this.board[row][index] = '.';
-        this.board[next][index] = 'X';
-        break;
-      }
-      console.log('TICK:')
-      this.printBoard();
-    }
-  }
-
- */
-  tick() {
-    console.log('TICK start')
-    console.log('Dimensions: ', this.fallingBlockWidth, this.fallingBlockHeight)
-    console.log('Board Dimensions: ', this.height, this.boardWidth)
-    if (this.type === "Block") {
-    for (let row in this.board) {
-      var index = this.board[row].indexOf('X');
-      if (~index) {
-        let next = parseInt(row + 1);
-        this.board[row][index] = '.';
-        this.board[next][index] = 'X';
-        break;
-        }
-      }
-    } else {
-      for (let row in this.board) {
-        let next = parseInt(this.fallingBlockCenter.y + 1)
-        console.log('SUM = ', next)
-        if (next <= parseInt(row)) {
-          // check drop condition
-          if (this.fallingBlock.botRow().forEach(cell => console.log('cell', cell))) {
-            this.drawTetrominoFrom(row - 1, this.fallingBlockCenter.x)
-            return;
-          }
-          this.fallingBlockCenter.y = next
-          this.drawTetrominoFrom(row , this.fallingBlockCenter.x)
-          this.printBoard()
-        }
-      }
-    }     
-  }
-    /** 
-      for (let row= 0; row < block.rows().length; row++) {
-        for (let col = 0; col < this.fallingBlockWidth; col++) {
-          this.board[row][fallingBlockStartIndex + col] = block.cellAtIndex(row,col)
-        }
-      }
-    */
-  drawTetrominoFrom(y, x) {
-    console.log('Block centre at ', y, x)
-    this.fallingBlockStartIndex = x - Math.floor(this.fallingBlockWidth / 2) - 1;
-      for (let row = 0; row < this.fallingBlockHeight; row++) {
-        for (let col = 0; col < this.fallingBlockWidth; col++) {
-          this.board[y-1 + row][this.fallingBlockStartIndex + col] = this.fallingBlock.cellAtIndex(row, col)
-          }    
-      }
-  }  
-
-  printBoard() {
-  
-    console.log(this.toString())  
-    
-  }
-
-  initializeBoardArray(boardWidth, height) {
-    let boardArray = [];
-    let row = [];
-    for (let i = 0; i < height; i++) {
-      for (let j = 0; j < boardWidth; j++) {
-        row.push('.');
-      }
-      boardArray[i] = row;
-      row = [];
-    }
-   return boardArray;
-  }
-  
-  blockCanDrop() {                                                               
-    for (let i = 0; i < this.fallingBlockWidth; i++) {
-      
-    }
-  }
-
-  cellBelowIsEmpty( row, col ) {
-    return (this.board[row+1][col] === "." || row + 1 === this.height)
+    return s;
   }
 }
