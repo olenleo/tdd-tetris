@@ -27,6 +27,15 @@ export class Board {
     this.#fallingRow = 0;
     this.#fallingCol = Math.floor((this.#width - block.width()) / 2);
   }
+
+  moveLeft() {
+    return "TODO"
+  }
+
+  moveRight() {
+    return "TODO"
+  }
+
   
   height() {
     return this.#height;
@@ -81,7 +90,6 @@ export class Board {
        }
            
       }
-      console.log('string', s , '\n');
       return this.#immobile[this.#fallingRow + 1][nextCol] !== EMPTY;
     }
   
