@@ -21,6 +21,9 @@ export class Block {
       return this.#color;
     }
   }
+  nrOfEmptyRows() {
+    return 0;
+  }
 
   toString() {
     return shapeToString(this);

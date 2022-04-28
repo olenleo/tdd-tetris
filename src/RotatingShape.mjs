@@ -13,7 +13,7 @@ export class RotatingShape {
         this.width = Math.sqrt(this.contentAsString.length);
         this.originalMatrix = this.initializeMatrix(this.contentAsString);
     }
- 
+
     initializeMatrix() {
         let contentIndex = 0;   
         let matrix = [];
@@ -28,7 +28,7 @@ export class RotatingShape {
         }
         return matrix;
     }
-    
+
     rotateRight() {
         let newMatrix = this.originalMatrix[0].map((val, index) => this.originalMatrix.map(row => row[index]).reverse())
         let s = ""
@@ -36,17 +36,17 @@ export class RotatingShape {
             for (let i = 0; i < newMatrix.length; i++ ) {
                 s += newMatrix[row][i];
             }
-              s += "\n";
+                s += "\n";
         }
         return new RotatingShape(s)
     }
-   
+
     rotateLeft() {
         let newMatrix = this.originalMatrix[0].map((val, index) => this.originalMatrix.map(row => row[row.length-1-index]));
         let s = ""
         for (let row = 0; row < newMatrix.length; row++) {
             for (let i = 0; i < newMatrix.length; i++ ) {
-              s += newMatrix[row][i]
+                s += newMatrix[row][i]
             }
             s += "\n"
         }
@@ -56,17 +56,18 @@ export class RotatingShape {
     blockAt(row, col) {
         return this.originalMatrix[row][col]
     }
-    
+
     toString() {
         let s = ""
         for (let row = 0; row < this.originalMatrix.length; row++) {
             for (let i = 0; i < this.originalMatrix.length; i++ ) {
-              s += this.originalMatrix[row][i]
+                s += this.originalMatrix[row][i]
             }
             s += "\n"
         }
         return s
-       }
+    }
+
     getMatrix() {
         return this.originalMatrix
     }

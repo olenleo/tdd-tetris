@@ -1,9 +1,4 @@
 import {RotatingShape} from "./RotatingShape.mjs";
-/**
- * For full disclosure, I have based this upon https://github.com/luontola/tdd-mooc-tetris/blob/d36b12f62d0d5839e47fd2e403e300f16f592eae/src/Tetrominoe.mjs
- * Toimin TIRA:ssa oppimallani tavalla, eli tutustuin koodiin ja toteutin sen uudestaan seuraavana päivänä ilman muistiinpanoja.
- * Toivottavasti tämä menettely kelpaa myös tällä kurssilla!
- */
 
 export class Tetromino {
   
@@ -90,23 +85,31 @@ export class Tetromino {
    * @returns RotatingShape -> OriginalMatrix[row][col]
    */
   blockAt(row, col) {
-    console.log('Tetromino blockat')
     return this.shape().blockAt(row, col);
   }
 
   cellAtIndex(row, column) {
-    console.log('Tetromino here :)):):):)')
-    console.log('Cell at [', row, ',', column, '] :', this.orientations[this.orientation].originalMatrix[row][column])
     return this.orientations[this.orientation].originalMatrix[row][column]
   }
 
-  botRow() {
-      return this.orientations[this.orientation].originalMatrix[this.rows().length -1]
+  nrOfEmptyRows() {
+    let ret = 0;
+    for (let i = this.height() - 1; i > 0; i--) {
+      for (let j = 0; j < this.width(); j++) {
+          if (this.blockAt(i,j) !== ".") {
+            return ret;
+          }
+        }
+        ret++;
+    }
+    return ret;
   }
   
   width() {
-
+    return this.orientations[this.orientation].originalMatrix[0].length;
   }
-  
+  height() {
+    return this.orientations[this.orientation].originalMatrix.length
+  }
 }
 
