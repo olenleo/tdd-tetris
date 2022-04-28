@@ -29,7 +29,9 @@ export class Board {
   }
 
   moveLeft() {
-    if (this.#fallingCol +this.#fallingBlock.nrOfEmptyRowsLeft() > 0) {
+    if (!this.hasFalling) { 
+      return;
+    } else if (this.#fallingCol +this.#fallingBlock.nrOfEmptyRowsLeft() > 0) {
       this.#fallingCol -= 1;
     }
   }
@@ -82,7 +84,6 @@ export class Board {
       return;
     }
     this.moveDown()
-    // console.log(this.toString())
   }
 
   collidesWithBot() {

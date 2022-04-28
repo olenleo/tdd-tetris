@@ -109,12 +109,29 @@ export class Tetromino {
   }
 
   nrOfEmptyRowsLeft() {
-    let ret = 2;
+    let ret = 0;
+    for (let col = 0; col < this.width(); col++) {
+      for (let row = 0; row < this.height(); row++) {
+        if (this.blockAt(row, col) !== ".") {
+          console.log(this.blockAt(row,col))
+          return ret;
+        }
+      }
+      ret++;
+    }
     return ret;
   }
 
   nrOfEmptyRowsRight() {
-    let ret = 2;
+    let ret = 0;
+    for (let col = this.width() - 1; col > 0; col--) {
+      for (let row = 0; row < this.height(); row++) {
+        if (this.blockAt(row,col) !== ".") {
+          return ret;
+        }
+      }
+      ret++;
+    }
     return ret;
   }
   
