@@ -29,11 +29,19 @@ export class Board {
   }
 
   moveLeft() {
-    return "TODO"
+    this.#fallingCol -= 1;
   }
 
   moveRight() {
-    return "TODO"
+    this.#fallingCol += 1;  
+  }
+
+  moveDown() {
+    if (this.collidesWithBot() || this.collidesWithImmobile()) {
+      this.#stopFalling();
+    } else {
+      this.#fallingRow++;
+    }
   }
 
   
@@ -66,11 +74,8 @@ export class Board {
     if (!this.hasFalling()) {
       return;
     }
-    if (this.collidesWithBot() || this.collidesWithImmobile()) {
-      this.#stopFalling();
-    } else {
-      this.#fallingRow++;
-    }
+    this.moveDown()
+   
     console.log(this.toString())
   }
   collidesWithBot() {
