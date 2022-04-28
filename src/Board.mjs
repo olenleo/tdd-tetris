@@ -29,14 +29,21 @@ export class Board {
   }
 
   moveLeft() {
-    this.#fallingCol -= 1;
+    if (this.#fallingCol +this.#fallingBlock.nrOfEmptyRowsLeft() > 0) {
+      this.#fallingCol -= 1;
+    }
   }
 
   moveRight() {
-    this.#fallingCol += 1;  
+    if (this.#fallingCol + this.#fallingBlock.nrOfEmptyRowsRight() < this.#width - 1) {
+      this.#fallingCol += 1;
+    } 
   }
 
   moveDown() {
+    if (!this.hasFalling()) {
+      return;
+    }
     if (this.collidesWithBot() || this.collidesWithImmobile()) {
       this.#stopFalling();
     } else {
@@ -75,9 +82,9 @@ export class Board {
       return;
     }
     this.moveDown()
-   
-    console.log(this.toString())
+    // console.log(this.toString())
   }
+
   collidesWithBot() {
     let botRow = this.#fallingBlock.nrOfEmptyRows()
     return this.#fallingRow + this.#fallingBlock.height() >= this.#height + botRow;

@@ -92,6 +92,9 @@ export class Tetromino {
     return this.orientations[this.orientation].originalMatrix[row][column]
   }
 
+  /** 
+   * Returns number of empty rows from bottom
+   */
   nrOfEmptyRows() {
     let ret = 0;
     for (let i = this.height() - 1; i > 0; i--) {
@@ -102,6 +105,16 @@ export class Tetromino {
         }
         ret++;
     }
+    return ret;
+  }
+
+  nrOfEmptyRowsLeft() {
+    let ret = 2;
+    return ret;
+  }
+
+  nrOfEmptyRowsRight() {
+    let ret = 2;
     return ret;
   }
   

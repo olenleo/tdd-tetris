@@ -34,7 +34,7 @@ describe("Falling tetrominoes can move", () => {
     );
   });
 
-  it("Tetromino can be moved down", () => {
+ it("Tetromino can be moved down", () => {
     board.moveDown()
     expect(board.toString()).to.equalShape(
       `..........
@@ -53,8 +53,7 @@ describe("Falling tetrominoes respect board boundaries", () => {
     beforeEach(() => {
       board = new Board(10, 6);
       board.drop(Tetromino.I_SHAPE.rotateRight());
-      console.log('Print board:')
-      console.log(board.toString())
+      
 
     });
   
@@ -88,7 +87,7 @@ describe("Falling tetrominoes respect board boundaries", () => {
         );
     });
   
-    xit("Tetromino cannot be dropped beyond the board", () => {
+    it("Tetromino cannot be dropped beyond the board", () => {
         for (let i = 0; i < 10; i++) {
             board.moveDown();
         }
