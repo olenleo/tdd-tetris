@@ -10,7 +10,7 @@ describe("Falling tetrominoes can move", () => {
     board.drop(Tetromino.T_SHAPE);
   });
 
-  it("Tetromino can move to the left", () => {
+  xit("Tetromino can move to the left", () => {
     board.moveLeft();
     expect(board.toString()).to.equalShape(
       `...T......
@@ -22,7 +22,7 @@ describe("Falling tetrominoes can move", () => {
     );
   });
 
-  it("Tetromino can move to the right", () => {
+  xit("Tetromino can move to the right", () => {
     board.moveRight();
     expect(board.toString()).to.equalShape(
        `.....T....
@@ -34,7 +34,7 @@ describe("Falling tetrominoes can move", () => {
     );
   });
 
- it("Tetromino can be moved down", () => {
+ xit("Tetromino can be moved down", () => {
     board.moveDown()
     expect(board.toString()).to.equalShape(
       `..........
@@ -56,7 +56,7 @@ describe("Falling tetrominoes respect board boundaries", () => {
    
     });
   
-    it("Tetromino cannot be moved left beyond the board", () => {
+    xit("Tetromino cannot be moved left beyond the board", () => {
         console.log(board.toString())
         for (let i = 0; i < 10; i++) {
             board.moveLeft();   
@@ -73,7 +73,7 @@ describe("Falling tetrominoes respect board boundaries", () => {
         );
     });
   
-    it("Tetromino cannot be moved right beyond the board", () => {
+    xit("Tetromino cannot be moved right beyond the board", () => {
         for (let i = 0; i < 10; i++) {
             board.moveRight();
         }
@@ -88,7 +88,7 @@ describe("Falling tetrominoes respect board boundaries", () => {
         );
     });
   
-    it("Tetromino cannot be dropped beyond the board", () => {
+    xit("Tetromino cannot be dropped beyond the board", () => {
         for (let i = 0; i < 10; i++) {
             board.moveDown();
         }
@@ -106,17 +106,20 @@ describe("Falling tetrominoes respect immobile blocks", () => {
     let board;
     beforeEach(() => {
         board = new Board(10, 6);
-        board.drop(Tetromino.I_SHAPE.rotateRight());
+        board.drop(Tetromino.T_SHAPE.rotateRight());
         board.tick()
         board.tick()
         board.tick()
         board.tick()
         board.drop(Tetromino.O_SHAPE);
+    });
+    
+    xit("Tetromino cannot pass an immobile block on left hand side", () => {
         console.log('Board print')
         console.log(board.toString())
-    });
-  
-    it("Tetromino cannot pass an immobile block on left hand side", () => {
+        board.moveRight();
+        board.moveRight();
+        board.moveRight();
         board.moveRight();
 
         for (let i = 0; i < 10; i++) {
