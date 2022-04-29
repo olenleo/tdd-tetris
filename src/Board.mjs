@@ -41,7 +41,13 @@ class MovableShape {
   moveDown () {
     return new MovableShape(this.#shape, this.#row+1, this.#col);
   }
+  moveLeft() {
+    return new MovableShape(this.#shape, this.#row, this.#col - 1);
+  }
 
+  moveRight( ) {
+    return new MovableShape(this.#shape, this.#row, this.#col + 1);
+  }
   width() {
     return this.#shape.width();
   }
@@ -92,18 +98,10 @@ export class Board {
   }
   
   tick() {
-    console.log('TICK')
-    console.log(this.toString())
     if (!this.hasFalling()) {
       return;
     }
-    const test = this.#fallingBlock.moveDown()
-    if (this.#fallingWouldHitFloor(test) || this.#fallingWouldHitImmobile(test)) {
-      this.#stopFalling();
-    } else {
-      this.#fallingBlock = test
-      this.#fallingRow++;
-    }
+    this.moveDown()
   }
 
   #fallingWouldHitFloor( block ) {
@@ -149,15 +147,52 @@ export class Board {
   moveLeft() {
     if (!this.hasFalling) { 
       return;
-    } else if (this.#fallingCol +this.#fallingBlock.nrOfEmptyRowsLeft() > 0) {
-      this.#fallingCol -= 1;
+    }
+    const test = this.#fallingBlock.moveLeft()
+    if (!this.collidesLeft(test)) {
+      this.#fallingCol--;
+      this.#fallingBlock = test;
     }
   }
 
+  collidesLeft( block ) {
+    for (const point of block.filledBlocks()) {
+      if (point.col < 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+  collidesRight( block ) {
+    for (const point of block.filledBlocks()) {
+      if (point.col +1 > this.#width) {
+        return true;
+      }
+    }
+    return false;
+  }
   moveRight() {
-    if (this.#fallingCol + this.#fallingBlock.nrOfEmptyRowsRight() < this.#width - 1) {
-      this.#fallingCol += 1;
-    } 
+    if (!this.hasFalling) { 
+      return;
+    }
+    const test = this.#fallingBlock.moveRight()
+    if (!this.collidesRight(test)) {
+      this.#fallingCol++;
+      this.#fallingBlock = test;
+    }
+  }
+
+  moveDown() {
+    if (!this.#fallingBlock) {
+      return;
+    }
+    const test = this.#fallingBlock.moveDown()
+    if (this.#fallingWouldHitFloor(test) || this.#fallingWouldHitImmobile(test)) {
+      this.#stopFalling();
+    } else {
+      this.#fallingBlock = test
+      this.#fallingRow++;
+    }
   }
  
 
