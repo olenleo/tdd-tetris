@@ -157,7 +157,7 @@ export class Board {
 
   collidesLeft( block ) {
     for (const point of block.filledBlocks()) {
-      if (point.col < 0) {
+      if (point.col < 0 || this.#immobile[point.row][point.col] !== EMPTY) {
         return true;
       }
     }
@@ -165,12 +165,14 @@ export class Board {
   }
   collidesRight( block ) {
     for (const point of block.filledBlocks()) {
-      if (point.col +1 > this.#width) {
+      // TODO add testing for collision!
+      if (point.col +1 > this.#width || this.#immobile[point.row][point.col] !== EMPTY) {
         return true;
       }
     }
     return false;
   }
+
   moveRight() {
     if (!this.hasFalling) { 
       return;
@@ -195,7 +197,6 @@ export class Board {
     }
   }
  
-
   hasFalling() {
     return this.#fallingBlock !== null;
   }
@@ -209,7 +210,6 @@ export class Board {
     }
     return this.#immobile[row][col];
   }
-
 
   toString() {
   return shapeToString(this)

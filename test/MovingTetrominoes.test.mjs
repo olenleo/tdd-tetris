@@ -139,59 +139,65 @@ describe("Falling tetrominoes respect immobile blocks", () => {
         board.tick()
         board.tick()
         board.drop(Tetromino.O_SHAPE);
+
     });
     
-    xit("Tetromino cannot pass an immobile block on left hand side", () => {
+    it("Tetromino cannot pass an immobile block on left hand side", () => {
+        
+        board.moveRight();
+        board.moveRight();
+        board.moveDown();
+        board.moveDown();
+        board.moveDown();
+        board.moveDown();
         console.log('Board print')
         console.log(board.toString())
-        board.moveRight();
-        board.moveRight();
-        board.moveRight();
-        board.moveRight();
-
-        for (let i = 0; i < 10; i++) {
-            board.moveDown()
-            board.moveLeft()
-            console.log('Board print')
+        board.moveLeft();
+        console.log('Board print')
         console.log(board.toString())
-        }
       
       expect(board.toString()).to.equalShape(
            `..........
             ..........
-            ....I.....
-            ....I.....
-            ....IOO...
-            ....IOO...`
+            ..........
+            ....T.....
+            ....TTOO..
+            ....T.OO..`
         );
     });
   
-    xit("TTetromino cannot pass an immobile block on right hand side", () => {
-        for (let i = 0; i < 10; i++) {
-            board.moveRight();
-        }
+    it("TTetromino cannot pass an immobile block on right hand side", () => {
+        board.moveLeft();
+        board.moveLeft();
+        board.moveDown();
+        board.moveDown();
+        board.moveDown();
+        board.moveDown();
+        board.moveRight()
+        console.log('Board print')
+        console.log(board.toString())
       
         expect(board.toString()).to.equalShape(
-            `.........I
-             .........I
-             .........I
-             .........I
-             ..........
-             ..........`
+            `..........
+            ..........
+            ..........
+            ....T.....
+            ..OOTT....
+            ..OOT.....`
         );
     });
   
-    xit("Tetromino cannot move down through an immobile block", () => {
+    it("Tetromino cannot move down through an immobile block", () => {
         for (let i = 0; i < 10; i++) {
             board.moveDown();
         }
         expect(board.toString()).to.equalShape(
             `..........
-             ..........
-             ....I.....
-             ....I.....
-             ....I.....
-             ....I.....`
+            ....OO....
+            ....OO....
+            ....T.....
+            ....TT....
+            ....T.....`
         );
     });
 });
