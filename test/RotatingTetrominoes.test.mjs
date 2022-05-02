@@ -1,6 +1,8 @@
 
 import { expect } from "chai";
 import { Tetromino } from "../src/Tetromino.mjs";
+import { Board} from "../src/Board.mjs"
+
 function distinctOrientations(shape) {
   const distinct = new Set();
   let goingRight = shape;
@@ -105,3 +107,89 @@ describe("The O shape", () => {
     expect(distinctOrientations(shape).size).to.equal(1);
   });
 });
+
+describe("Rotating falling tetrominoes", () => {
+  let board;
+    beforeEach(() => {
+      board = new Board(10, 6);
+      board.drop(Tetromino.T_SHAPE);
+      for (let i = 0; i < 10; i++) {
+        board.moveDown()
+      }
+      board.drop(Tetromino.T_SHAPE)
+    });
+  
+  
+  it("can be rotated left / counterclockwise", () => {
+    board.rotateLeft()
+    console.log('Board print')
+      console.log(board.toString())
+    expect(board.toString()).to.equalShape(
+      `....T.....
+       ...TT.....
+       ....T.....
+       ..........
+       ....T.....
+       ...TTT....`
+    );
+  });
+
+  
+  it("can be rotated right / clockwise", () => {
+    board.rotateRight()
+    console.log('Board print')
+    console.log(board.toString())
+    expect(board.toString()).to.equalShape(
+      `....T.....
+       ....TT....
+       ....T.....
+       ..........
+       ....T.....
+       ...TTT....`
+    );
+
+  });
+  
+
+  
+
+});
+describe("Falling tetrominoes and rotation:", () => {
+  let board;
+    beforeEach(() => {
+      board = new Board(10, 6);
+      board.drop(Tetromino.I_SHAPE.rotateRight());
+      board.moveLeft();
+      for (let i = 0; i < 10; i++) {
+        board.moveDown()
+      }
+      board.drop(Tetromino.I_SHAPE.rotateRight());
+      board.moveRight();
+      for (let i = 0; i < 10; i++) {
+        board.moveDown()
+      }
+      board.drop(Tetromino.I_SHAPE)
+      console.log('PRINT BOARD')
+      console.log()
+    });
+  
+  
+  it("a falling tetromino won't rotate if there is no room", () => {
+    board.rotateLeft();
+    board.moveDown();
+    board.rotateLeft();
+    board.rotateRight();
+    console.log('Board print')
+      console.log(board.toString())
+    expect(board.toString()).to.equalShape(
+      `..........
+       ....I.....      
+       ...III....
+       ...III....
+       ...III....
+       ...I.I....`
+    );
+  });
+
+});
+

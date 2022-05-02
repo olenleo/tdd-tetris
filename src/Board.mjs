@@ -48,6 +48,14 @@ class MovableShape {
   moveRight( ) {
     return new MovableShape(this.#shape, this.#row, this.#col + 1);
   }
+
+  rotateLeft() {
+    return new MovableShape(this.#shape.rotateLeft(), this.#row, this.#col)
+  }
+
+  rotateRight() {
+    return new MovableShape(this.#shape.rotateRight(), this.#row, this.#col)
+  }
   width() {
     return this.#shape.width();
   }
@@ -102,6 +110,19 @@ export class Board {
       return;
     }
     this.moveDown()
+  }
+
+  rotateLeft() {
+    const test = this.#fallingBlock.rotateLeft()
+    if (!this.collidesLeft(test)) {
+      this.#fallingBlock = test;
+    }
+  }
+  rotateRight() {
+    const test = this.#fallingBlock.rotateRight()
+    if (!this.collidesRight(test)) {
+      this.#fallingBlock = test;
+    }
   }
 
   #fallingWouldHitFloor( block ) {
@@ -165,7 +186,6 @@ export class Board {
   }
   collidesRight( block ) {
     for (const point of block.filledBlocks()) {
-      // TODO add testing for collision!
       if (point.col +1 > this.#width || this.#immobile[point.row][point.col] !== EMPTY) {
         return true;
       }

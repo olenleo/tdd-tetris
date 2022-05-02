@@ -57,7 +57,6 @@ describe("Falling tetrominoes respect board boundaries", () => {
     });
   
     it("Tetromino cannot be moved left beyond the board", () => {
-        console.log(board.toString())
         for (let i = 0; i < 10; i++) {
             board.moveLeft();   
         }
@@ -112,7 +111,6 @@ describe("Falling tetrominoes respect board boundaries pt 2", () => {
     });
   
     it("Tetromino cannot be moved left beyond the board", () => {
-        console.log(board.toString())
         for (let i = 0; i < 10; i++) {
             board.moveLeft();   
         }
@@ -150,11 +148,6 @@ describe("Falling tetrominoes respect immobile blocks", () => {
         board.moveDown();
         board.moveDown();
         board.moveDown();
-        console.log('Board print')
-        console.log(board.toString())
-        board.moveLeft();
-        console.log('Board print')
-        console.log(board.toString())
       
       expect(board.toString()).to.equalShape(
            `..........
@@ -166,7 +159,7 @@ describe("Falling tetrominoes respect immobile blocks", () => {
         );
     });
   
-    it("TTetromino cannot pass an immobile block on right hand side", () => {
+    it("Tetromino cannot pass an immobile block on right hand side", () => {
         board.moveLeft();
         board.moveLeft();
         board.moveDown();
@@ -174,8 +167,6 @@ describe("Falling tetrominoes respect immobile blocks", () => {
         board.moveDown();
         board.moveDown();
         board.moveRight()
-        console.log('Board print')
-        console.log(board.toString())
       
         expect(board.toString()).to.equalShape(
             `..........
