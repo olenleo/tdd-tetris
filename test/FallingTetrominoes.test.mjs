@@ -56,7 +56,7 @@ describe("Falling tetrominoes", () => {
        ...TTT....`
     );
   });
-
+  // Had a falsely implemented Tetromino shape - this test was used for debugging 
   it("J-tetrominoes can be dropped", () => {
      board.drop(Tetromino.J_SHAPE);
 
