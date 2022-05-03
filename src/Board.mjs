@@ -26,6 +26,12 @@ class MovableShape {
     //console.log('I recieve ', this.#shape)
   }
 
+  setCol(adj) {
+    console.log('Call setCol(',adj,')')
+    console.log('this.col + adj = ', this.#col + adj)
+    this.#col += adj;
+
+  }
   filledBlocks() { 
     const points = [];
     for (let row = this.#row; row < this.#row + this.#shape.height(); row++) {
@@ -113,17 +119,48 @@ export class Board {
   }
 
   rotateLeft() {
-    const test = this.#fallingBlock.rotateLeft()
-    if (!this.collidesLeft(test)) {
+    let test = this.#fallingBlock.rotateLeft()
+    let adj = this.rotationWouldReachOutsideBoard(test);
+    if (adj !== 0) {
+      console.log('Adjustment: ', adj)
+    }
+    if (!this.collidesLeft(test) && adj === 0) {
       this.#fallingBlock = test;
     }
+    
+    else if (adj < 0) {
+      adj = Math.abs(adj)
+      test.setCol(adj)
+      this.#fallingBlock = test;
+    }
+    else if (adj > 0) {
+      this.#fallingBlock = test;
+      test.setCol(this.#width - adj - 1)
+      console.log(this.toString())
+    }
   }
+  rotationWouldReachOutsideBoard( test ) {
+      for (const point of test.filledBlocks()) {
+        if (point.col < 0) {
+          return (point.col);
+        }
+        if (point.col >= this.#width) {
+          console.log('Hit right edge')
+          console.log('point col', point.col)
+          return (point.col);
+        }
+      }
+      console.log('Imma just return 0')
+      return 0;
+  }
+
   rotateRight() {
     const test = this.#fallingBlock.rotateRight()
     if (!this.collidesRight(test)) {
       this.#fallingBlock = test;
     }
   }
+
 
   #fallingWouldHitFloor( block ) {
     for (const point of block.filledBlocks()) {

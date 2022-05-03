@@ -179,17 +179,99 @@ describe("Falling tetrominoes and rotation:", () => {
     board.moveDown();
     board.rotateLeft();
     board.rotateRight();
-    console.log('Board print')
-      console.log(board.toString())
-    expect(board.toString()).to.equalShape(
+   expect(board.toString()).to.equalShape(
       `..........
        ....I.....      
        ...III....
        ...III....
        ...III....
        ...I.I....`
-    );
+    ); 
   });
 
+  
 });
+describe("Falling I-tetrominoes and rotation:", () => {
+  let board;
+    beforeEach(() => {
+      board = new Board(10, 6);
+      board.drop(Tetromino.I_SHAPE.rotateRight());
+    });
+    it("a falling tetromino performs a wall kick when it's rotated cw too close to the left wall", () => {
+      board.moveLeft();
+      board.moveLeft();
+      board.moveLeft();
+      board.moveLeft();
+      board.rotateLeft();
+      expect(board.toString()).to.equalShape(
+          `..........
+          ..........
+          IIII......      
+          ..........
+          ..........
+          ..........`
+        );
 
+    });
+    it("a falling tetromino performs a wall kick when it's rotated ccw too close to the right wall", () => {
+      board.moveRight();
+      board.moveRight();
+      board.moveRight();
+      board.moveRight();
+      board.moveRight();
+      board.rotateLeft();
+      expect(board.toString()).to.equalShape(
+         `..........
+          ..........      
+          ......IIII
+          ..........
+          ..........
+          ..........`
+        );
+
+    });
+  }
+)
+describe("Falling L-tetrominoes and rotation:", () => {
+let board;
+  beforeEach(() => {
+    board = new Board(10, 6);
+    board.drop(Tetromino.L_SHAPE.rotateLeft());
+  });
+  it("a falling tetromino performs a wall kick when it's rotated cw too close to the left wall", () => {
+    board.moveLeft();
+    board.moveLeft();
+    board.moveLeft();
+    board.moveLeft();
+    board.moveLeft();
+    board.moveLeft();
+    console.log(board.toString())
+    board.rotateLeft()
+    expect(board.toString()).to.equalShape(
+        `..........
+         LLL.......
+         L.........      
+         ..........
+         ..........
+         ..........`
+      );
+
+  });
+  it("a falling tetromino performs a wall kick when it's rotated ccw too close to the right wall", () => {
+    board.moveRight();
+    board.moveRight();
+    board.moveRight();
+    board.moveRight();
+    board.moveRight();
+    board.rotateLeft();
+    expect(board.toString()).to.equalShape(
+       `..........
+        .......LLL      
+        .......L..
+        ..........
+        ..........
+        ..........`
+      );
+    });
+  }
+)

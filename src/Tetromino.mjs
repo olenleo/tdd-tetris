@@ -27,17 +27,19 @@ export class Tetromino {
      SS.
      ...`, 0, 2)
 
-  static L_SHAPE = new Tetromino(
-    `.....
-     LLLL.
-     ...L.
-     .....`, 0, 4)
+  static J_SHAPE = new Tetromino(
+    `....
+     JJJ.
+     ..J.
+     ....
+     `, 0, 4)
     
-    static J_SHAPE = new Tetromino(
-    `.....
-     ...L.
-     LLLL.
-     .....`, 0, 4)
+    static L_SHAPE = new Tetromino(
+    `....
+     ..L.
+     LLL.
+     ....
+     `, 0, 4)
   orientation
   orientations
   

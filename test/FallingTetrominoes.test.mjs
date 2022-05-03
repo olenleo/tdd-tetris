@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect, util } from "chai";
 import { Board } from "../src/Board.mjs";
 import { Tetromino } from "../src/Tetromino.mjs";
 
@@ -56,4 +56,17 @@ describe("Falling tetrominoes", () => {
        ...TTT....`
     );
   });
+
+  it("J-tetrominoes can be dropped", () => {
+     board.drop(Tetromino.J_SHAPE);
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ...JJJ....
+       .....J....
+       ..........
+       ..........
+       ..........`
+    );
+  })
 });

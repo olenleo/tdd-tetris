@@ -54,6 +54,9 @@ export class RotatingShape {
     }
 
     blockAt(row, col) {
+        if (this.originalMatrix[row][col] === undefined) {
+            this.originalMatrix[row][col] = "."
+        }
         return this.originalMatrix[row][col]
     }
 
