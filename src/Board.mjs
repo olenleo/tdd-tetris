@@ -186,6 +186,7 @@ export class Board {
         this.#immobile[row][col] = this.blockAt(row, col);
       }
     }
+    this.checkForFilledRows()
     this.#fallingBlock = null;
   }
   
@@ -269,9 +270,28 @@ export class Board {
         this.#immobile[row] = array[row];
     }
   } 
+  
+  checkForFilledRows() {
+    for (var row = 0; row < this.#height; row++) {
+      let isFilled = true;
+      for (var col = 0; col < this.#width; col++) {
+          if (this.#immobile[row][col] === EMPTY) {
+              isFilled = false;
+          }
+      }
+      if (isFilled) {
+        this.#immobile.splice(row, 1)
+        this.#immobile.unshift(new Array(this.#width).fill(EMPTY))
+      }
+    }
+    
+    
+  }
 
   toString() {
   return shapeToString(this)
   }
+
+  
 
 }
