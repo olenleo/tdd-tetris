@@ -16,7 +16,7 @@ function distinctOrientations(shape) {
   }
   return distinct;
 }
-/*
+
 describe("The T shape", () => {
   const shape = Tetromino.T_SHAPE;
   it("initial orientation", () => {
@@ -44,7 +44,7 @@ describe("The T shape", () => {
     expect(distinctOrientations(shape).size).to.equal(4);
   });
 });
-*/
+
 
 describe("The new T shape", () => {
   const shape = new NewRotatingShape("T");
@@ -205,7 +205,6 @@ describe("Falling tetrominoes and rotation:", () => {
       ]
       board.setImmobileState(immobileArray)
       
-      console.log('BEFORE TEST', board.toString())
     });
   
   
@@ -214,10 +213,6 @@ describe("Falling tetrominoes and rotation:", () => {
     board.moveDown();
     board.moveDown();
     board.rotateLeft();
-    
-    
-    
-    console.log('board', board.toString())
    expect(board.toString()).to.equalShape(
       `..........
        ..........      
@@ -234,7 +229,7 @@ describe("Falling I-tetrominoes and rotation:", () => {
   let board;
     beforeEach(() => {
       board = new Board(10, 6);
-      board.drop(Tetromino.I_SHAPE.rotateRight());
+      board.drop(new NewRotatingShape("I").rotateLeft());
     });
     it("a falling tetromino performs a wall kick when it's rotated cw too close to the left wall", () => {
       board.moveLeft();
@@ -244,8 +239,8 @@ describe("Falling I-tetrominoes and rotation:", () => {
       board.rotateLeft();
       expect(board.toString()).to.equalShape(
           `..........
-          ..........
           IIII......      
+          ..........
           ..........
           ..........
           ..........`
@@ -261,8 +256,8 @@ describe("Falling I-tetrominoes and rotation:", () => {
       board.rotateLeft();
       expect(board.toString()).to.equalShape(
          `..........
+         ......IIII
           ..........      
-          ......IIII
           ..........
           ..........
           ..........`
@@ -278,7 +273,7 @@ describe("Falling L-tetrominoes and rotation:", () => {
 let board;
   beforeEach(() => {
     board = new Board(10, 6);
-    board.drop(Tetromino.L_SHAPE.rotateLeft());
+    board.drop(new NewRotatingShape("L").rotateLeft());
   });
   it("a falling tetromino performs a wall kick when it's rotated cw too close to the left wall", () => {
     board.moveLeft();
@@ -290,8 +285,8 @@ let board;
     board.rotateLeft()
     expect(board.toString()).to.equalShape(
         `..........
+         ..L.......
          LLL.......
-         L.........
          ..........
          ..........
          ..........`
@@ -307,8 +302,8 @@ let board;
     board.rotateLeft();
     expect(board.toString()).to.equalShape(
        `..........
-        .......LLL      
-        .......L..
+        .........L      
+        .......LLL
         ..........
         ..........
         ..........`

@@ -114,6 +114,7 @@ export class Board {
     if (!this.hasFalling()) {
       return;
     }
+    
     this.moveDown()
   }
 
@@ -265,12 +266,8 @@ export class Board {
 
   setImmobileState ( array ) {
     for (let row = 0; row < this.#height; row++) {
-      console.log('immobile[', row, '] : ', this.#immobile[row])
-      console.log('array[', row, '] : ', array[row])
         this.#immobile[row] = array[row];
     }
-    console.log('New state:')
-    console.log(this.toString())
   } 
 
   toString() {

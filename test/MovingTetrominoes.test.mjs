@@ -107,7 +107,7 @@ describe("Falling tetrominoes respect board boundaries pt 2", () => {
     let board;
     beforeEach(() => {
       board = new Board(10, 6);
-      board.drop(Tetromino.T_SHAPE.rotateRight());
+      board.drop(new NewRotatingShape("T").rotateLeft());
    
     });
   
@@ -118,9 +118,9 @@ describe("Falling tetrominoes respect board boundaries pt 2", () => {
        
       
       expect(board.toString()).to.equalShape(
-            `T.........
+            `.T........
              TT........
-             T.........
+             .T........
              ..........
              ..........
              ..........`
@@ -130,52 +130,49 @@ describe("Falling tetrominoes respect board boundaries pt 2", () => {
 
 describe("Falling tetrominoes respect immobile blocks", () => {
     let board;
+    let immobileArray = [
+        [".",".",".",".",".",".",".",".",".","."],
+        [".",".",".",".",".",".",".",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        
+      ]
     beforeEach(() => {
         board = new Board(10, 6);
-        board.drop(Tetromino.T_SHAPE.rotateRight());
+        board.setImmobileState(immobileArray)
+        board.drop(new NewRotatingShape("O"));
         board.tick()
         board.tick()
-        board.tick()
-        board.tick()
-        board.drop(Tetromino.O_SHAPE);
-
     });
     
     it("Tetromino cannot pass an immobile block on left hand side", () => {
         
-        board.moveRight();
-        board.moveRight();
-        board.moveDown();
-        board.moveDown();
-        board.moveDown();
-        board.moveDown();
-      
+    
+    board.moveLeft();
+    console.log("diiz nuts", board.toString())
       expect(board.toString()).to.equalShape(
            `..........
             ..........
-            ..........
-            ....T.....
-            ....TTOO..
-            ....T.OO..`
+            ...X..X...
+            ...XOOX...
+            ...XOOX...
+            ...X..X...`
         );
     });
   
     it("Tetromino cannot pass an immobile block on right hand side", () => {
-        board.moveLeft();
-        board.moveLeft();
-        board.moveDown();
-        board.moveDown();
-        board.moveDown();
-        board.moveDown();
+
         board.moveRight()
       
         expect(board.toString()).to.equalShape(
             `..........
             ..........
-            ..........
-            ....T.....
-            ..OOTT....
-            ..OOT.....`
+            ...X..X...
+            ...XOOX...
+            ...XOOX...
+            ...X..X...`
         );
     });
   
@@ -183,13 +180,17 @@ describe("Falling tetrominoes respect immobile blocks", () => {
         for (let i = 0; i < 10; i++) {
             board.moveDown();
         }
+        board.drop(new NewRotatingShape("O"))
+        for (let i = 0; i < 10; i++) {
+            board.moveDown();
+        }
         expect(board.toString()).to.equalShape(
             `..........
-            ....OO....
-            ....OO....
-            ....T.....
-            ....TT....
-            ....T.....`
+            ..........
+            ...XOOX...
+            ...XOOX...
+            ...XOOX...
+            ...XOOX...`
         );
     });
 });
