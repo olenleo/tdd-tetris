@@ -1,5 +1,5 @@
 import { shapeToString } from "./shapes.mjs";
-
+import { NewRotatingShape } from "./NewRotatingShape.mjs";
 const EMPTY = ".";
 
 class Point {
@@ -27,15 +27,13 @@ class MovableShape {
   }
 
   setCol(adj) {
-    console.log('Call setCol(',adj,')')
-    console.log('this.col + adj = ', this.#col + adj)
     this.#col += adj;
 
   }
   filledBlocks() { 
     const points = [];
     for (let row = this.#row; row < this.#row + this.#shape.height(); row++) {
-      for (let col = this.#col; col < this.#col + this.#shape.width(); col++) {
+      for (let col = this.#col; col < this.#col + this.#shape.getWidth(); col++) {
         const block = this.blockAt(row, col);
         if (block !== EMPTY) {
           points.push(new Point(row, col));
@@ -62,7 +60,7 @@ class MovableShape {
   rotateRight() {
     return new MovableShape(this.#shape.rotateRight(), this.#row, this.#col)
   }
-  width() {
+  getWidth() {
     return this.#shape.width();
   }
 
@@ -75,7 +73,7 @@ class MovableShape {
       row >= this.#row &&
       row < this.#row + this.#shape.height() &&
       col >= this.#col &&
-      col < this.#col + this.#shape.width()
+      col < this.#col + this.#shape.getWidth()
     ) {
       return this.#shape.blockAt(row - this.#row, col - this.#col);
     } else {
@@ -103,12 +101,16 @@ export class Board {
   }
   
   drop(block) {
+    
     if (this.#fallingBlock) {
       throw new Error("another block is already falling");
     }
-    this.#fallingBlock = new MovableShape(block, 0,  Math.floor((this.#width - block.width()) / 2))
+    if (block.constructor.name === "NewRotatingShape") {
+
+    }
+    this.#fallingBlock = new MovableShape(block, 0,  Math.floor((this.#width - block.getWidth()) / 2))
     this.#fallingRow = 0;
-    this.#fallingCol = Math.floor((this.#width - block.width()) / 2);
+    this.#fallingCol = Math.floor((this.#width - block.getWidth()) / 2);
   }
   
   tick() {
@@ -122,7 +124,7 @@ export class Board {
     let test = this.#fallingBlock.rotateLeft()
     let adj = this.rotationWouldReachOutsideBoard(test);
     if (adj !== 0) {
-      console.log('Adjustment: ', adj)
+      //console.log('Adjustment: ', adj)
     }
     if (!this.collidesLeft(test) && adj === 0) {
       this.#fallingBlock = test;
@@ -136,7 +138,6 @@ export class Board {
     else if (adj > 0) {
       this.#fallingBlock = test;
       test.setCol(this.#width - adj - 1)
-      console.log(this.toString())
     }
   }
   rotationWouldReachOutsideBoard( test ) {
@@ -145,12 +146,9 @@ export class Board {
           return (point.col);
         }
         if (point.col >= this.#width) {
-          console.log('Hit right edge')
-          console.log('point col', point.col)
           return (point.col);
         }
       }
-      console.log('Imma just return 0')
       return 0;
   }
 

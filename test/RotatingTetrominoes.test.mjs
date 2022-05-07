@@ -122,8 +122,6 @@ describe("Rotating falling tetrominoes", () => {
   
   it("can be rotated left / counterclockwise", () => {
     board.rotateLeft()
-    console.log('Board print')
-      console.log(board.toString())
     expect(board.toString()).to.equalShape(
       `....T.....
        ...TT.....
@@ -137,8 +135,6 @@ describe("Rotating falling tetrominoes", () => {
   
   it("can be rotated right / clockwise", () => {
     board.rotateRight()
-    console.log('Board print')
-    console.log(board.toString())
     expect(board.toString()).to.equalShape(
       `....T.....
        ....TT....
@@ -169,8 +165,6 @@ describe("Falling tetrominoes and rotation:", () => {
         board.moveDown()
       }
       board.drop(Tetromino.I_SHAPE)
-      console.log('PRINT BOARD')
-      console.log()
     });
   
   
@@ -248,7 +242,6 @@ let board;
     board.moveLeft();
     board.moveLeft();
     board.moveLeft();
-    console.log(board.toString())
     board.rotateLeft()
     expect(board.toString()).to.equalShape(
         `..........

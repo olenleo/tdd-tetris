@@ -74,5 +74,9 @@ export class RotatingShape {
     getMatrix() {
         return this.originalMatrix
     }
+
+    getWidth() {
+        return this.width
+    }
 }
   

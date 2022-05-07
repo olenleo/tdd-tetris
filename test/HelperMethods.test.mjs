@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Board } from "../src/Board.mjs";
 import { Tetromino } from "../src/Tetromino.mjs";
-
+/*
 
 describe("Count empty rows", () => {
   let board;
@@ -35,4 +35,5 @@ describe("Count empty rows", () => {
   it("I-tetromino has two empty bot rows", () => {
       expect(Tetromino.I_SHAPE.nrOfEmptyRows()).to.equal(2);
   })
-});
+})
+*/

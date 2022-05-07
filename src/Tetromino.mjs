@@ -136,7 +136,7 @@ export class Tetromino {
     return ret;
   }
   
-  width() {
+  getWidth() {
     return this.orientations[this.orientation].originalMatrix[0].length;
   }
   height() {

@@ -8,7 +8,7 @@ export class Block {
     this.#color = color;
   }
 
-  width() {
+  getWidth() {
     return 1;
   }
 
