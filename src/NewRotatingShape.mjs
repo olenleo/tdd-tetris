@@ -51,7 +51,6 @@ export class NewRotatingShape {
   }
 
   getWidth() {
-    console.log('You clalled this?')
     return this.width;
   }
 

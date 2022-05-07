@@ -28,18 +28,6 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-  it("new Tetromino starts from the top middle", () => {
-    board.drop(new NewRotatingShape("T"));
-
-    expect(board.toString()).to.equalShape(
-      `...TTT....
-       ....T.....
-       ..........
-       ..........
-       ..........
-       ..........`
-    );
-  });
 
   it("stop when they hit the bottom", () => {
     board.drop(Tetromino.T_SHAPE);
@@ -73,6 +61,70 @@ describe("Falling tetrominoes", () => {
   // Had a falsely implemented Tetromino shape - this test was used for debugging 
   it("J-tetrominoes can be dropped", () => {
      board.drop(Tetromino.J_SHAPE);
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ...JJJ....
+       .....J....
+       ..........
+       ..........
+       ..........`
+    );
+  })
+});
+
+describe("Falling new rotating shapes", () => {
+  let board;
+  beforeEach(() => {
+    board = new Board(10, 6);
+  });
+
+
+  it("start from the top middle", () => {
+    board.drop(new NewRotatingShape("T"));
+
+    expect(board.toString()).to.equalShape(
+      `...TTT....
+       ....T.....
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  it("stop when they hit the bottom", () => {
+    board.drop(new NewRotatingShape("T"));
+    fallToBottom(board);
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ..........
+       ..........
+       ...TTT....
+       ....T.....`
+    );
+  });
+
+  it("stop when they land on another block", () => {
+    board.drop(new NewRotatingShape("T"));
+    fallToBottom(board);
+    board.drop(new NewRotatingShape("T"));
+    fallToBottom(board);
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ...TTT....
+       ....T.....
+       ...TTT....
+       ....T.....`
+    );
+  });
+  // Had a falsely implemented Tetromino shape - this test was used for debugging 
+  it("J-tetrominoes can be dropped", () => {
+     board.drop(new NewRotatingShape("J"));
 
     expect(board.toString()).to.equalShape(
       `..........
