@@ -97,10 +97,10 @@ export class NewRotatingShape {
         IIII
         ....
         ....`,
-         `.I..
-          .I..
-          .I..
-          .I..`
+         `..I.
+          ..I.
+          ..I.
+          ..I.`
         ]
       break;
       case("O") : 

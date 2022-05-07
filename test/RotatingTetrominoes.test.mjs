@@ -80,32 +80,32 @@ describe("The new T shape", () => {
 
 
 describe("The I shape", () => {
-  const shape = Tetromino.I_SHAPE;
+  const shape = new NewRotatingShape("I");
   it("initial orientation", () => {
     expect(shape.toString()).to.equalShape(
-      `.....
-       .....
-       IIII.
-       .....
-       .....`
+      `....
+       IIII
+       ....
+       ....
+       `
     );
   });
   it("can be rotated right/clockwise", () => {
     expect(shape.rotateRight().toString()).to.equalShape(
-      `..I..
-       ..I..
-       ..I..
-       ..I..
-       .....`
+      `..I.
+       ..I.
+       ..I.
+       ..I.
+       `
     );
   });
   it("can be rotated left/counter-clockwise", () => {
     expect(shape.rotateLeft().toString()).to.equalShape(
-      `..I..
-       ..I..
-       ..I..
-       ..I..
-       .....`
+      `..I.
+       ..I.
+       ..I.
+       ..I.
+       `
     );
   });
   it("has 2 distinct orientations", () => {
@@ -116,26 +116,29 @@ describe("The I shape", () => {
 
 
 describe("The O shape", () => {
-  const shape = Tetromino.O_SHAPE;
+  const shape = new NewRotatingShape("O");
   it("initial orientation", () => {
     expect(shape.toString()).to.equalShape(
-      `.OO
-       .OO
-       ...`
+      `....
+       .OO.
+       .OO.
+       ....`
     );
   });
   it("cannot be rotated right/clockwise", () => {
     expect(shape.rotateRight().toString()).to.equalShape(
-      `.OO
-       .OO
-       ...`
+      `....
+       .OO.
+       .OO.
+       ....`
     );
   });
   it("cannot be rotated left/counter-clockwise", () => {
     expect(shape.rotateLeft().toString()).to.equalShape(
-      `.OO
-       .OO
-       ...`
+      `....
+       .OO.
+       .OO.
+       ....`
     );
   });
   it("has 1 distinct orientations", () => {
@@ -147,11 +150,11 @@ describe("Rotating falling tetrominoes", () => {
   let board;
     beforeEach(() => {
       board = new Board(10, 6);
-      board.drop(Tetromino.T_SHAPE);
+      board.drop(new NewRotatingShape("T"));
       for (let i = 0; i < 10; i++) {
         board.moveDown()
       }
-      board.drop(Tetromino.T_SHAPE)
+      board.drop(new NewRotatingShape("T"));
     });
   
   
@@ -162,8 +165,8 @@ describe("Rotating falling tetrominoes", () => {
        ...TT.....
        ....T.....
        ..........
-       ....T.....
-       ...TTT....`
+       ...TTT....
+       ....T.....`
     );
   });
 
@@ -175,8 +178,8 @@ describe("Rotating falling tetrominoes", () => {
        ....TT....
        ....T.....
        ..........
-       ....T.....
-       ...TTT....`
+       ...TTT....
+       ....T.....`
     );
 
   });
