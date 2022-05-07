@@ -184,7 +184,7 @@ export class Board {
 
   #stopFalling() {
     for (let row = 0; row < this.height(); row++) {
-      for (let col = 0; col < this.width(); col++) {
+      for (let col = 0; col < this.getWidth(); col++) {
         this.#immobile[row][col] = this.blockAt(row, col);
       }
     }
@@ -195,7 +195,7 @@ export class Board {
     return this.#height;
   }
   
-  width() {
+  getWidth() {
     return this.#width;
   }
 

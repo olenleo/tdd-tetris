@@ -1,3 +1,4 @@
+import { shapeToString } from "./shapes.mjs";
 import {Tetromino} from "./Tetromino.mjs";
 
 
@@ -10,17 +11,18 @@ export class NewRotatingShape {
   contentAsString;
   width;
 
-  constructor(color) {
-    console.log('\n\n***********************\n\nHi, newRotatingShape constructor:')
+  constructor(color, orientation) {
     this.color = color;
     this.generateOrientations(color);
-    console.log('this orientations[0] now:\n', this.orientations[0])
-    this.trimString(this.orientations[0])
-    console.log('cont as string', this.contentAsString, 'length:', this.contentAsString.length)
-    this.orientation = this.orientations[0];
+    if (orientation === undefined) {
+      this.orientation = 0;
+    } else {
+      this.orientation = orientation
+    }
+    this.trimString(this.orientations[this.orientation])
+    
     this.width = Math.sqrt(this.contentAsString.length);
     this.originalMatrix = this.initializeMatrix();
-    console.log('*******************\n\n\n')
 
     }
     trimString(string) {
@@ -55,13 +57,13 @@ export class NewRotatingShape {
   }
 
   rotateRight() {
-    let setOrientation = (this.orientation === this.orientations.length - 1 ? 0 : this.orientation + 1)
-    return new NewRotatingShape(null, setOrientation, this.orientations)
+    let setOrientation = (this.orientation === 0 ? this.orientations.length - 1 : this.orientation - 1)
+    return new NewRotatingShape(this.color, setOrientation)
   }
 
   rotateLeft() {
-    let setOrientation = (this.orientation === 0 ? this.orientations.length - 1 : this.orientation - 1)
-    return new Tetromino(null,setOrientation, this.orientations)
+    let setOrientation = (this.orientation === this.orientations.length - 1 ? 0 : this.orientation + 1)
+    return new NewRotatingShape(this.color, setOrientation)
   }
 
   generateOrientations( shape ) {
@@ -180,5 +182,8 @@ export class NewRotatingShape {
   }
   height() {
     return this.originalMatrix.length
+  }
+  toString() {
+    return shapeToString(this)
   }
 }
