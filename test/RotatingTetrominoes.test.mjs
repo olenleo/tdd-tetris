@@ -190,34 +190,41 @@ describe("Rotating falling tetrominoes", () => {
 });
 describe("Falling tetrominoes and rotation:", () => {
   let board;
+  
     beforeEach(() => {
       board = new Board(10, 6);
-      board.drop(Tetromino.I_SHAPE.rotateRight());
-      board.moveLeft();
-      for (let i = 0; i < 10; i++) {
-        board.moveDown()
-      }
-      board.drop(Tetromino.I_SHAPE.rotateRight());
-      board.moveRight();
-      for (let i = 0; i < 10; i++) {
-        board.moveDown()
-      }
-      board.drop(Tetromino.I_SHAPE)
+      
+      let immobileArray = [
+        [".",".",".",".",".",".",".",".",".","."],
+        [".",".",".",".",".",".",".",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        [".",".",".","X",".",".","X",".",".","."],
+        
+      ]
+      board.setImmobileState(immobileArray)
+      
+      console.log('BEFORE TEST', board.toString())
     });
   
   
   it("a falling tetromino won't rotate if there is no room", () => {
-    board.rotateLeft();
+    board.drop(new NewRotatingShape("I").rotateRight());
+    board.moveDown();
     board.moveDown();
     board.rotateLeft();
-    board.rotateRight();
+    
+    
+    
+    console.log('board', board.toString())
    expect(board.toString()).to.equalShape(
       `..........
-       ....I.....      
-       ...III....
-       ...III....
-       ...III....
-       ...I.I....`
+       ..........      
+       ...X.IX...
+       ...X.IX...
+       ...X.IX...
+       ...X.IX...`
     ); 
   });
 

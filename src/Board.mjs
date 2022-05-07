@@ -105,9 +105,6 @@ export class Board {
     if (this.#fallingBlock) {
       throw new Error("another block is already falling");
     }
-    if (block.constructor.name === "NewRotatingShape") {
-
-    }
     this.#fallingBlock = new MovableShape(block, 0,  Math.floor((this.#width - block.getWidth()) / 2))
     this.#fallingRow = 0;
     this.#fallingCol = Math.floor((this.#width - block.getWidth()) / 2);
@@ -182,7 +179,7 @@ export class Board {
     return false;
   }
 
-  #stopFalling() {
+  stopFalling() {
     for (let row = 0; row < this.height(); row++) {
       for (let col = 0; col < this.getWidth(); col++) {
         this.#immobile[row][col] = this.blockAt(row, col);
@@ -245,7 +242,7 @@ export class Board {
     }
     const test = this.#fallingBlock.moveDown()
     if (this.#fallingWouldHitFloor(test) || this.#fallingWouldHitImmobile(test)) {
-      this.#stopFalling();
+      this.stopFalling();
     } else {
       this.#fallingBlock = test
       this.#fallingRow++;
@@ -266,7 +263,18 @@ export class Board {
     return this.#immobile[row][col];
   }
 
+  setImmobileState ( array ) {
+    for (let row = 0; row < this.#height; row++) {
+      console.log('immobile[', row, '] : ', this.#immobile[row])
+      console.log('array[', row, '] : ', array[row])
+        this.#immobile[row] = array[row];
+    }
+    console.log('New state:')
+    console.log(this.toString())
+  } 
+
   toString() {
   return shapeToString(this)
   }
+
 }
