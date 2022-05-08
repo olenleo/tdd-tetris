@@ -1,5 +1,6 @@
 import { shapeToString } from "./shapes.mjs";
-import { NewRotatingShape } from "./NewRotatingShape.mjs";
+import { Scoring } from "./Scoring.mjs";
+
 const EMPTY = ".";
 
 class Point {
@@ -90,6 +91,7 @@ export class Board {
   #fallingRow;
   #fallingCol;
   #immobile;
+  #score
   
   constructor(width, height) {
     this.#width = width;
@@ -98,6 +100,7 @@ export class Board {
     for (let row = 0; row < height; row++) {
       this.#immobile[row] = new Array(width).fill(EMPTY);
     }
+    this.#score = new Scoring();
   }
   
   drop(block) {
@@ -272,6 +275,7 @@ export class Board {
   } 
   
   checkForFilledRows() {
+    let rows = [];
     for (var row = 0; row < this.#height; row++) {
       let isFilled = true;
       for (var col = 0; col < this.#width; col++) {
@@ -280,14 +284,20 @@ export class Board {
           }
       }
       if (isFilled) {
-        this.#immobile.splice(row, 1)
-        this.#immobile.unshift(new Array(this.#width).fill(EMPTY))
+          rows.push(row);
+        }
       }
+      
+      for (row in rows) {
+        this.#immobile.splice(rows[row], 1)
+        this.#immobile.unshift(new Array(this.#width).fill(EMPTY))
     }
-    
-    
+    this.#score.addPoints(rows.length);
   }
 
+  getScore() {
+    return this.#score.getScore()
+  }
   toString() {
   return shapeToString(this)
   }
