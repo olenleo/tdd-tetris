@@ -67,8 +67,6 @@ describe("Clearing rows", () => {
     ]
     board.setImmobileState(immobileArray)
     board.drop(new NewRotatingShape("I").rotateRight())
-    console.log('board draw')
-    console.log(board.toString())
     for (let i = 0; i < 10; i++) {
       board.tick()
     }

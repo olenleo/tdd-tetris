@@ -20,11 +20,9 @@ class MovableShape {
   #col;
 
   constructor(shape,row,col) {
-    //console.log('Hello. I am \nMovableShape\nConstructor:\n\n')
     this.#shape= shape;
     this.#row = row;
     this.#col = col;
-    //console.log('I recieve ', this.#shape)
   }
 
   setCol(adj) {
